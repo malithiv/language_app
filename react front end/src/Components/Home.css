@@ -1,0 +1,277 @@
+/* Home.css */
+.hero-section {
+    background: linear-gradient(135deg, #6610f2 0%, #6f42c1 100%);
+    padding: 100px 0;
+  }
+
+  /* Navbar Styles */
+.navbar {
+  width: 100vw;
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, #6610f2, #6f42c1);
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.8rem;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.navbar-collapse {
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.navbar-nav {
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  color: #f8f9fa !important;
+  font-weight: 500;
+  padding: 0.5rem 1rem !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #e1e3e8 !important;
+}
+
+.navbar-logo {
+  width: 150px; /* Adjust the size as needed */
+  height: auto;
+  margin-right: 10px;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand span {
+  font-weight: bold;
+  color: #ffffff; /* Adjust the color as needed */
+}
+/* Responsive Navbar */
+@media (max-width: 991px) {
+  .navbar {
+    padding: 0.5rem 0;
+  }
+
+  .navbar .container {
+    padding: 0 1rem;
+  }
+
+  .navbar-collapse {
+    background: linear-gradient(135deg, #6610f2, #6f42c1);
+    padding: 1rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  .navbar-nav {
+    padding: 1rem 0;
+  }
+
+  .nav-link {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .navbar-nav .btn {
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .d-flex .btn {
+    margin: 0.25rem 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar .container {
+    padding: 0 0.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.4rem;
+  }
+}
+
+/* Fix for potential horizontal scrolling */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Additional utility classes */
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Hero Section */
+.hero-section {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 80px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Beautiful gradient options - uncomment the one you prefer */
+
+  /* Option 1: Vibrant Purple to Blue */
+  background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
+
+  /* Option 2: Soft Purple to Pink */
+  /* background: linear-gradient(120deg, #8e2de2 0%, #4a00e0 100%); */
+
+  /* Option 3: Modern Blue to Purple */
+  /* background: linear-gradient(120deg, #4e54c8 0%, #8f94fb 100%); */
+
+  /* Option 4: Colorful Gradient */
+  /* background: linear-gradient(120deg, #FF416C 0%, #FF4B2B 100%); */
+
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Optional: Add subtle gradient overlay */
+.hero-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%);
+}
+
+.hero-section h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.9;
+}
+
+.hero-section .btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #6a11cb;
+  font-weight: bold;
+  border: none;
+  transition: all 0.3s ease;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hero-section .btn:hover {
+  background: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .hero-section h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 0;
+  }
+
+  .hero-section h1 {
+    font-size: 2.3rem;
+  }
+
+  .hero-section p {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-section {
+    padding: 50px 0;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+}
+
