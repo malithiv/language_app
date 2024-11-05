@@ -33,20 +33,32 @@ const QuizComponent = () => {
     setQuizResults(null);
   };
 
-  const handleAnswer = (answer) => {
-    setUserAnswers({ ...userAnswers, [currentQuestionIndex]: answer });
-    if (currentQuestionIndex < currentQuiz.questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      submitQuiz();
+  const handleAnswer = async (answer) => {
+    const updatedAnswers = { ...userAnswers, [currentQuestionIndex]: answer };
+    setUserAnswers(updatedAnswers);
+
+    try {
+      await axios.post('http://localhost:5000/api/submit-answer', {
+        quizId: currentQuiz.id,
+        questionIndex: currentQuestionIndex,
+        answer: answer,
+      });
+
+      if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        await submitQuiz(updatedAnswers);
+      }
+    } catch (error) {
+      console.error('Error submitting answer:', error);
     }
   };
 
-  const submitQuiz = async () => {
+  const submitQuiz = async (finalAnswers) => {
     try {
       const response = await axios.post('http://localhost:5000/api/submit-quiz', {
         quizId: currentQuiz.id,
-        answers: userAnswers,
+        answers: finalAnswers,
       });
       setQuizResults(response.data);
       setQuizCompleted(true);
@@ -62,7 +74,7 @@ const QuizComponent = () => {
         <div className="container">
           <Link to="/" className="navbar-brand d-flex align-items-center">
             <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
-            <span className="h3 mb-0 ms-2">KidsLingo</span>
+            <span className="h3 mb-0 ms-2">Lang Pro</span>
           </Link>
           <button
             className="navbar-toggler"

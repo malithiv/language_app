@@ -143,7 +143,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Activities Section */}
+      {/* Activities Section
       <section id="activities" className="py-5 bg-light">
         <div className="container">
           <h2 className="text-center mb-4">Fun Activities 🎨</h2>
@@ -162,7 +162,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Progress Section */}
       <section id="progress" className="py-5">
@@ -215,7 +215,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="bg-dark py-4 text-white text-center">
         <div className="container">
-          <p className="mb-0">© 2024 KidsLingo. All rights reserved. 🌟</p>
+          <p className="mb-0">© 2024 Lang Pro. All rights reserved. 🌟</p>
         </div>
       </footer>
 
