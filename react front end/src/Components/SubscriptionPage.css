@@ -1,0 +1,113 @@
+/* SubscriptionPage.css */
+
+.subscription-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .subscription-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  
+  .subscription-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .subscription-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .package-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+  }
+  
+  .price {
+    font-size: 2.5rem;
+    color: #0066cc;
+    margin-bottom: 30px;
+  }
+  
+  .currency {
+    font-size: 1.5rem;
+    vertical-align: super;
+  }
+  
+  .amount {
+    font-weight: bold;
+  }
+  
+  .period {
+    font-size: 1rem;
+    color: #888;
+  }
+  
+  .features {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 30px;
+  }
+  
+  .features li {
+    margin-bottom: 15px;
+    color: #555;
+  }
+  
+  .features li::before {
+    content: '✓';
+    color: #4CAF50;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .subscribe-button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .subscribe-button:hover {
+    background-color: #0052a3;
+  }
+  
+  .guarantee {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  @media (max-width: 480px) {
+    .subscription-title {
+      font-size: 2rem;
+    }
+  
+    .subscription-card {
+      padding: 30px;
+    }
+  
+    .price {
+      font-size: 2rem;
+    }
+  }

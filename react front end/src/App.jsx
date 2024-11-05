@@ -8,6 +8,7 @@ import './App.css'
 import { BrowserRouter ,Route , Routes } from 'react-router-dom';
 import Home from './Components/homepage'
 import QuizComponent from './Components/quize';
+import SubscriptionPage from './Components/Subscription';
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
     <Routes>
     <Route path="/" element={<Home/>}> </Route>
     <Route path="/quizes" element={<QuizComponent/>}> </Route>
+    <Route path="/subscription" element={<SubscriptionPage/>}> </Route>
     </Routes>
     </BrowserRouter>
   )

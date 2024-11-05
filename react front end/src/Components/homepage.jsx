@@ -16,7 +16,7 @@ const Home = () => {
 
   const quizzes = [
     { id: 1, icon: '🇱🇰', title: 'Sinhala Quiz', level: 'Beginner' },
-    { id: 2, icon: '🇬🇧', title: 'English Quiz', level: 'Intermediate' },
+    { id: 2, icon: '🇬🇧', title: 'Tagalog Quiz', level: 'Intermediate' },
     { id: 3, icon: '🇮🇳', title: 'Tamil Quiz', level: 'Advanced' },
   ];
 
@@ -72,7 +72,7 @@ const Home = () => {
         <div className="container">
           <Link to="/" className="navbar-brand d-flex align-items-center">
             <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
-            <span className="h3 mb-0 ms-2">KidsLingo</span>
+            <span className="h3 mb-0 ms-2">Lang Pro</span>
           </Link>
           <button
             className="navbar-toggler"
@@ -92,6 +92,9 @@ const Home = () => {
               </li>
               <li className="nav-item">
                 <Link to="/progress" className="nav-link">My Progress</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/subscription" className="nav-link">Subscription</Link>
               </li>
             </ul>
             <div className="d-flex">
