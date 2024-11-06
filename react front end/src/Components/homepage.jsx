@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 import './Home.css';
@@ -17,13 +17,14 @@ const Home = () => {
   const [profilePicture, setProfilePicture] = useState('');
   const [username, setUsername] = useState('');
  
-  const handleLogout = () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('username');
-    setIsLoggedIn(false);
-    setUsername('');
-    window.location.href = '/';
-  };
+  
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setIsLoggedIn(true);
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const quizzes = [
     { id: 1, icon: 'LK', title: 'Sinhala Quiz', level: 'Beginner' },
@@ -31,11 +32,14 @@ const Home = () => {
   ];
 
   const activities = [
+
     { id: 1, icon: '🎨', title: 'Coloring Activity', description: 'Learn colors in different languages' },
     { id: 2, icon: '🎵', title: 'Sing-Along', description: 'Learn through catchy songs' },
     { id: 3, icon: '📚', title: 'Story Time', description: 'Read interactive stories' },
+
   ];
 <Link to="/terms" className="text-primary">Terms of Service</Link>
+
 
   const handleLogin = async () => {
     const response = await fetch('http://127.0.0.1:3000/login', {
@@ -105,8 +109,10 @@ const Home = () => {
           <Link to="/subscription" className="nav-link">Subscription</Link>
         </li>
       </ul>
-      <div className="d-flex align-items-center">
-  {isLoggedIn ? (
+
+
+   < div className="d-flex align-items-center">
+   {isLoggedIn || localStorage.getItem('username') ? (
     <div className="dropdown">
       <button
         className="btn btn-dark dropdown-toggle d-flex align-items-center"
@@ -115,7 +121,7 @@ const Home = () => {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <span className="me-2">{username}</span>
+        <span className="me-2">{username || localStorage.getItem('username')}</span>
       </button>
       <ul 
         className="dropdown-menu dropdown-menu-end" 
@@ -149,7 +155,14 @@ const Home = () => {
           <button 
             className="dropdown-item text-light" 
             onClick={handleLogout}
-            style={{ padding: '8px 20px' }}
+            style={{ 
+              padding: '8px 20px',
+              border: 'none',
+              background: 'none',
+              width: '100%',
+              textAlign: 'left',
+              cursor: 'pointer'
+            }}
           >
             <i className="fas fa-sign-out-alt me-2"></i>Logout
           </button>
