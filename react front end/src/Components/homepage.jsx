@@ -15,19 +15,19 @@ const Home = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profilePicture, setProfilePicture] = useState('');
+  const [username, setUsername] = useState('');
  
   const handleLogout = () => {
     localStorage.removeItem('userId');
-    localStorage.removeItem('profilePicture');
+    localStorage.removeItem('username');
     setIsLoggedIn(false);
-    setProfilePicture('');
-    // Optional: Redirect to home page
+    setUsername('');
     window.location.href = '/';
   };
 
   const quizzes = [
-    { id: 1, icon: '🇱🇰', title: 'Sinhala Quiz', level: 'Beginner' },
-    { id: 2, icon: '🇬🇧', title: 'Tagalog Quiz', level: 'Beginner' },
+    { id: 1, icon: 'LK', title: 'Sinhala Quiz', level: 'Beginner' },
+    { id: 2, icon: 'ph', title: 'Tagalog Quiz', level: 'Beginner' },
   ];
 
   const activities = [
@@ -36,6 +36,7 @@ const Home = () => {
     { id: 3, icon: '📚', title: 'Story Time', description: 'Read interactive stories' },
   ];
 <Link to="/terms" className="text-primary">Terms of Service</Link>
+
   const handleLogin = async () => {
     const response = await fetch('http://127.0.0.1:3000/login', {
       method: 'POST',
@@ -44,11 +45,14 @@ const Home = () => {
       },
       body: JSON.stringify({ email: loginEmail, password: loginPassword }),
     });
-
+  
     const data = await response.json();
       
     if (response.ok) {
-      localStorage.setItem('userId', data.userId); // Assuming the userId is returned in the response
+      localStorage.setItem('userId', data.userId);
+      localStorage.setItem('username', data.username); // Store username in localStorage
+      setUsername(data.username); // Set username in state
+      setIsLoggedIn(true);
       Swal.fire('Success', 'Login successful!', 'success');
       setShowLoginModal(false);
     } else {
@@ -98,89 +102,77 @@ const Home = () => {
           <Link to="/quizes" className="nav-link">Quizzes</Link>
         </li>
         <li className="nav-item">
-          <Link to="/activities" className="nav-link">Activities</Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/progress" className="nav-link">My Progress</Link>
-        </li>
-        <li className="nav-item">
           <Link to="/subscription" className="nav-link">Subscription</Link>
         </li>
       </ul>
       <div className="d-flex align-items-center">
-        {isLoggedIn ? (
-          <div className="dropdown">
-            <img
-              src={profilePicture || 'default-profile.png'} // Add a default profile picture
-              alt="Profile"
-              className="rounded-circle"
-              width="40"
-              height="40"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              style={{ 
-                cursor: 'pointer',
-                border: '2px solid #fff',
-                marginLeft: '15px'
-              }}
-            />
-            <ul 
-              className="dropdown-menu dropdown-menu-end" 
-              aria-labelledby="dropdownMenuButton"
-              style={{
-                backgroundColor: '#343a40',
-                marginTop: '10px',
-                border: '1px solid rgba(255,255,255,0.1)'
-              }}
-            >
-              <li>
-                <Link 
-                  className="dropdown-item text-light" 
-                  to="/profile"
-                  style={{ padding: '8px 20px' }}
-                >
-                  <i className="fas fa-user me-2"></i>Profile
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  className="dropdown-item text-light" 
-                  to="/settings"
-                  style={{ padding: '8px 20px' }}
-                >
-                  <i className="fas fa-cog me-2"></i>Settings
-                </Link>
-              </li>
-              <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255,255,255,0.1)' }}/></li>
-              <li>
-                <button 
-                  className="dropdown-item text-light" 
-                  onClick={handleLogout}
-                  style={{ padding: '8px 20px' }}
-                >
-                  <i className="fas fa-sign-out-alt me-2"></i>Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <>
-            <button
-              className="btn btn-outline-primary me-2"
-              onClick={() => setShowLoginModal(true)}
-            >
-              Login
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => setShowRegisterModal(true)}
-            >
-              Register
-            </button>
-          </>
-        )}
-      </div>
+  {isLoggedIn ? (
+    <div className="dropdown">
+      <button
+        className="btn btn-dark dropdown-toggle d-flex align-items-center"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <span className="me-2">{username}</span>
+      </button>
+      <ul 
+        className="dropdown-menu dropdown-menu-end" 
+        aria-labelledby="dropdownMenuButton"
+        style={{
+          backgroundColor: '#343a40',
+          marginTop: '10px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}
+      >
+        <li>
+          <Link 
+            className="dropdown-item text-light" 
+            to="/profile"
+            style={{ padding: '8px 20px' }}
+          >
+            <i className="fas fa-user me-2"></i>Profile
+          </Link>
+        </li>
+        <li>
+          <Link 
+            className="dropdown-item text-light" 
+            to="/settings"
+            style={{ padding: '8px 20px' }}
+          >
+            <i className="fas fa-cog me-2"></i>Settings
+          </Link>
+        </li>
+        <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255,255,255,0.1)' }}/></li>
+        <li>
+          <button 
+            className="dropdown-item text-light" 
+            onClick={handleLogout}
+            style={{ padding: '8px 20px' }}
+          >
+            <i className="fas fa-sign-out-alt me-2"></i>Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    <>
+      <button
+        className="btn btn-outline-primary me-2"
+        onClick={() => setShowLoginModal(true)}
+      >
+        Login
+      </button>
+      <button
+        className="btn btn-primary"
+        onClick={() => setShowRegisterModal(true)}
+      >
+        Register
+      </button>
+    </>
+  )}
+</div>
     </div>
   </div>
 </nav>

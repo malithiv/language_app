@@ -11,6 +11,7 @@ import QuizComponent from './Components/quize';
 import SubscriptionPage from './Components/Subscription';
 import PaymentForm from './Components/PaymentGateway';
 
+
 function App() {
   
 
@@ -21,6 +22,7 @@ function App() {
     <Route path="/quizes" element={<QuizComponent/>}> </Route>
     <Route path="/subscription" element={<SubscriptionPage/>}> </Route>
     <Route path="/payment" element={<PaymentForm/>}> </Route>
+   
     </Routes>
     </BrowserRouter>
   )

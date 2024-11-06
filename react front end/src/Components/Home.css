@@ -155,6 +155,7 @@ html, body {
 /* Hero Section */
 .hero-section {
   width: 100vw;
+  height: 35vw;
   position: relative;
   left: 50%;
   right: 50%;

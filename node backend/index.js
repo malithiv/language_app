@@ -53,24 +53,43 @@ app.post('/register', async (req, res) => {
 // Login route
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
+  console.log('Login attempt for email:', email); // Debug log
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
 
   const sql = "SELECT * FROM users WHERE email = ?";
   db.query(sql, [email], async (err, results) => {
     if (err) {
-      console.error("Error fetching user:", err);
-      return res.status(500).json({ message: 'Login failed', error: err });
+      console.error("Database error:", err);
+      return res.status(500).json({ message: 'Database error occurred' });
     }
 
-    if (results.length > 0) {
-      const user = results[0];
+    if (results.length === 0) {
+      console.log('No user found with email:', email); // Debug log
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    const user = results[0];
+    
+    try {
       const passwordMatch = await bcrypt.compare(password, user.password);
+      
       if (passwordMatch) {
-        res.json({ message: 'Login successful' });
+        console.log('Login successful for user:', user.username); // Debug log
+        res.json({
+          message: 'Login successful',
+          userId: user.id,
+          username: user.username
+        });
       } else {
-        res.status(401).json({ message: 'Invalid credentials' });
+        console.log('Invalid password for user:', email); // Debug log
+        res.status(401).json({ message: 'Invalid password' });
       }
-    } else {
-      res.status(401).json({ message: 'Invalid credentials' });
+    } catch (error) {
+      console.error("Password comparison error:", error);
+      res.status(500).json({ message: 'Error verifying credentials' });
     }
   });
 });
