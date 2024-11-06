@@ -17,7 +17,19 @@ const Home = () => {
   const [profilePicture, setProfilePicture] = useState('');
   const [username, setUsername] = useState('');
  
-  
+  const handleLogout = () => {
+    // Clear all relevant localStorage items
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    
+    // Reset state
+    setIsLoggedIn(false);
+    setUsername('');
+    setProfilePicture('');
+    
+    // Redirect to home page
+    window.location.href = '/';
+  };
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
     if (storedUsername) {

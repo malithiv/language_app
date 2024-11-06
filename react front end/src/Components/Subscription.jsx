@@ -7,11 +7,25 @@ import logo from './langpro.png';
 const SubscriptionPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profilePicture, setProfilePicture] = useState('');
+  const [username, setUsername] = useState('');
+ 
+  const handleLogout = () => {
+    // Clear all relevant localStorage items
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    
+    // Reset state
+    setIsLoggedIn(false);
+    setUsername('');
+    setProfilePicture('');
+    
+    // Redirect to home page
+    window.location.href = '/';
+  };
 
   return (
     <div className="subscription-container">
-         {/* Navbar */}
-<nav className="navbar navbar-expand-lg navbar-dark bg-dark full-screen">
+     <nav className="navbar navbar-expand-lg navbar-dark bg-dark full-screen">
   <div className="container">
     <Link to="/" className="navbar-brand d-flex align-items-center">
       <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
@@ -34,80 +48,83 @@ const SubscriptionPage = () => {
           <Link to="/subscription" className="nav-link">Subscription</Link>
         </li>
       </ul>
-      <div className="d-flex align-items-center">
-        {isLoggedIn ? (
-          <div className="dropdown">
-            <img
-              src={profilePicture || 'default-profile.png'} // Add a default profile picture
-              alt="Profile"
-              className="rounded-circle"
-              width="40"
-              height="40"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              style={{ 
-                cursor: 'pointer',
-                border: '2px solid #fff',
-                marginLeft: '15px'
-              }}
-            />
-            <ul 
-              className="dropdown-menu dropdown-menu-end" 
-              aria-labelledby="dropdownMenuButton"
-              style={{
-                backgroundColor: '#343a40',
-                marginTop: '10px',
-                border: '1px solid rgba(255,255,255,0.1)'
-              }}
-            >
-              <li>
-                <Link 
-                  className="dropdown-item text-light" 
-                  to="/profile"
-                  style={{ padding: '8px 20px' }}
-                >
-                  <i className="fas fa-user me-2"></i>Profile
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  className="dropdown-item text-light" 
-                  to="/settings"
-                  style={{ padding: '8px 20px' }}
-                >
-                  <i className="fas fa-cog me-2"></i>Settings
-                </Link>
-              </li>
-              <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255,255,255,0.1)' }}/></li>
-              <li>
-                <button 
-                  className="dropdown-item text-light" 
-                  onClick={handleLogout}
-                  style={{ padding: '8px 20px' }}
-                >
-                  <i className="fas fa-sign-out-alt me-2"></i>Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <>
-            <button
-              className="btn btn-outline-primary me-2"
-              onClick={() => setShowLoginModal(true)}
-            >
-              Login
-            </button>
-            <button
-              className="btn btn-primary"
-              onClick={() => setShowRegisterModal(true)}
-            >
-              Register
-            </button>
-          </>
-        )}
-      </div>
+
+
+   < div className="d-flex align-items-center">
+   {isLoggedIn || localStorage.getItem('username') ? (
+    <div className="dropdown">
+      <button
+        className="btn btn-dark dropdown-toggle d-flex align-items-center"
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <span className="me-2">{username || localStorage.getItem('username')}</span>
+      </button>
+      <ul 
+        className="dropdown-menu dropdown-menu-end" 
+        aria-labelledby="dropdownMenuButton"
+        style={{
+          backgroundColor: '#343a40',
+          marginTop: '10px',
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}
+      >
+        <li>
+          <Link 
+            className="dropdown-item text-light" 
+            to="/profile"
+            style={{ padding: '8px 20px' }}
+          >
+            <i className="fas fa-user me-2"></i>Profile
+          </Link>
+        </li>
+        <li>
+          <Link 
+            className="dropdown-item text-light" 
+            to="/settings"
+            style={{ padding: '8px 20px' }}
+          >
+            <i className="fas fa-cog me-2"></i>Settings
+          </Link>
+        </li>
+        <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255,255,255,0.1)' }}/></li>
+        <li>
+          <button 
+            className="dropdown-item text-light" 
+            onClick={handleLogout}
+            style={{ 
+              padding: '8px 20px',
+              border: 'none',
+              background: 'none',
+              width: '100%',
+              textAlign: 'left',
+              cursor: 'pointer'
+            }}
+          >
+            <i className="fas fa-sign-out-alt me-2"></i>Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    <>
+      <button
+        className="btn btn-outline-primary me-2"
+        onClick={() => setShowLoginModal(true)}
+      >
+        Login
+      </button>
+      <button
+        className="btn btn-primary"
+        onClick={() => setShowRegisterModal(true)}
+      >
+        Register
+      </button>
+    </>
+  )}
+</div>
     </div>
   </div>
 </nav>

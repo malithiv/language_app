@@ -25,6 +25,7 @@ const PaymentForm = () => {
 
   return (
     <div className="payment-form">
+      
       <h2>Payment Gateway</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
