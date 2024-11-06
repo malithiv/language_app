@@ -1,7 +1,9 @@
 import React from 'react';
 import './SubscriptionPage.css';
+import { Link } from 'react-router-dom';
 
 const SubscriptionPage = () => {
+  
   return (
     <div className="subscription-container">
       <h1 className="subscription-title">Upgrade Your Learning Experience</h1>
@@ -19,7 +21,7 @@ const SubscriptionPage = () => {
           <li>Ad-free experience</li>
           <li>Priority customer support</li>
         </ul>
-        <button className="subscribe-button">Subscribe Now</button>
+       <Link to="/payment"><button className="subscribe-button" onClick="">Subscribe Now</button></Link> 
       </div>
       <div className="guarantee">
         30-day money-back guarantee. No questions asked.

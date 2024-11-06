@@ -75,6 +75,19 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post('/api/process-payment', (req, res) => {
+  const { cardNumber, expiryDate, cvv, amount } = req.body;
+
+  // Simulate payment processing
+  const isSuccessful = true;
+  
+  if (isSuccessful) {
+    res.json({ status: 'success', message: 'Payment processed successfully' });
+  } else {
+    res.status(400).json({ status: 'error', message: 'Payment failed' });
+  }
+});
+
 // Fetch quizzes
 app.get('/api/quizzes', (req, res) => {
   const sql = "SELECT * FROM quizzes";

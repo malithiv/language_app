@@ -9,6 +9,7 @@ import { BrowserRouter ,Route , Routes } from 'react-router-dom';
 import Home from './Components/homepage'
 import QuizComponent from './Components/quize';
 import SubscriptionPage from './Components/Subscription';
+import PaymentForm from './Components/PaymentGateway';
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
     <Route path="/" element={<Home/>}> </Route>
     <Route path="/quizes" element={<QuizComponent/>}> </Route>
     <Route path="/subscription" element={<SubscriptionPage/>}> </Route>
+    <Route path="/payment" element={<PaymentForm/>}> </Route>
     </Routes>
     </BrowserRouter>
   )

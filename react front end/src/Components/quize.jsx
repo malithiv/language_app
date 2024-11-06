@@ -11,12 +11,21 @@ const QuizComponent = () => {
   const [userAnswers, setUserAnswers] = useState({});
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [quizResults, setQuizResults] = useState(null);
+  const [currentAnswer, setCurrentAnswer] = useState('');
+  const userId = localStorage.getItem('user_id');
 
   useEffect(() => {
     fetchQuizzes();
   }, []);
 
   const fetchQuizzes = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/quizzes');
+      setQuizzes(response.data);
+    } catch (error) {
+      console.error('Error fetching quizzes:', error);
+    }
+
     try {
       const response = await axios.get('http://localhost:5000/api/quizzes');
       setQuizzes(response.data);
@@ -31,21 +40,26 @@ const QuizComponent = () => {
     setUserAnswers({});
     setQuizCompleted(false);
     setQuizResults(null);
+    setCurrentAnswer('');
   };
 
-  const handleAnswer = async (answer) => {
-    const updatedAnswers = { ...userAnswers, [currentQuestionIndex]: answer };
+  const handleAnswer = (answer) => {
+    setCurrentAnswer(answer);
+  };
+
+  const submitAnswer = async () => {
+    const updatedAnswers = { ...userAnswers, [currentQuestionIndex]: currentAnswer };
     setUserAnswers(updatedAnswers);
 
     try {
-      await axios.post('http://localhost:5000/api/submit-answer', {
-        quizId: currentQuiz.id,
-        questionIndex: currentQuestionIndex,
-        answer: answer,
+      await axios.post('http://localhost:5000/api/evaluate-answer', {
+        userAnswer: currentAnswer,
+        correctAnswer: currentQuiz.questions[currentQuestionIndex].correct_answer
       });
 
       if (currentQuestionIndex < currentQuiz.questions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setCurrentAnswer('');
       } else {
         await submitQuiz(updatedAnswers);
       }
@@ -70,7 +84,8 @@ const QuizComponent = () => {
   return (
     <div className="quiz-container">
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark full-screen">
+          {/* Navbar */}
+          <nav className="navbar navbar-expand-lg navbar-dark bg-dark full-screen">
         <div className="container">
           <Link to="/" className="navbar-brand d-flex align-items-center">
             <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
@@ -87,7 +102,7 @@ const QuizComponent = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto">
               <li className="nav-item">
-                <Link to="/quizzes" className="nav-link">Quizzes</Link>
+                <Link to="/quizes" className="nav-link">Quizzes</Link>
               </li>
               <li className="nav-item">
                 <Link to="/activities" className="nav-link">Activities</Link>
@@ -95,10 +110,23 @@ const QuizComponent = () => {
               <li className="nav-item">
                 <Link to="/progress" className="nav-link">My Progress</Link>
               </li>
+              <li className="nav-item">
+                <Link to="/subscription" className="nav-link">Subscription</Link>
+              </li>
             </ul>
             <div className="d-flex">
-              <button className="btn btn-outline-primary me-2">Login</button>
-              <button className="btn btn-primary">Register</button>
+              <button
+                className="btn btn-outline-primary me-2"
+                onClick={() => setShowLoginModal(true)}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowRegisterModal(true)}
+              >
+                Register
+              </button>
             </div>
           </div>
         </div>
@@ -109,9 +137,12 @@ const QuizComponent = () => {
       {!currentQuiz && (
         <div className="quiz-list">
           {quizzes.map((quiz) => (
-            <button key={quiz.id} onClick={() => startQuiz(quiz)} className="quiz-button">
-              {quiz.title}
-            </button>
+            <div key={quiz.id} className="quiz-item">
+              <img src={quiz.image_url} alt={quiz.title} className="quiz-image" />
+              <button onClick={() => startQuiz(quiz)} className="quiz-button">
+                {quiz.title}
+              </button>
+            </div>
           ))}
         </div>
       )}
@@ -124,8 +155,9 @@ const QuizComponent = () => {
             type="text"
             placeholder="Your answer"
             onChange={(e) => handleAnswer(e.target.value)}
-            value={userAnswers[currentQuestionIndex] || ''}
+            value={currentAnswer}
           />
+          <button onClick={submitAnswer} className="submit-answer">Enter</button>
         </div>
       )}
       
@@ -141,6 +173,7 @@ const QuizComponent = () => {
               <p>Your Answer: {result.user_answer}</p>
               <p>Correct Answer: {result.correct_answer}</p>
               <p>Similarity Score: {result.similarity_score}</p>
+              <p>Score: {result.is_correct ? "1" : "0"} / 1</p>
               <p className={result.is_correct ? "correct-feedback" : "incorrect-feedback"}>
                 Feedback: {result.feedback}
               </p>

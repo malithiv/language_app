@@ -13,11 +13,21 @@ const Home = () => {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerEmail, setRegisterEmail] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profilePicture, setProfilePicture] = useState('');
+ 
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('profilePicture');
+    setIsLoggedIn(false);
+    setProfilePicture('');
+    // Optional: Redirect to home page
+    window.location.href = '/';
+  };
 
   const quizzes = [
     { id: 1, icon: '🇱🇰', title: 'Sinhala Quiz', level: 'Beginner' },
-    { id: 2, icon: '🇬🇧', title: 'Tagalog Quiz', level: 'Intermediate' },
-    { id: 3, icon: '🇮🇳', title: 'Tamil Quiz', level: 'Advanced' },
+    { id: 2, icon: '🇬🇧', title: 'Tagalog Quiz', level: 'Beginner' },
   ];
 
   const activities = [
@@ -36,7 +46,7 @@ const Home = () => {
     });
 
     const data = await response.json();
-
+      
     if (response.ok) {
       localStorage.setItem('userId', data.userId); // Assuming the userId is returned in the response
       Swal.fire('Success', 'Login successful!', 'success');
@@ -67,54 +77,114 @@ const Home = () => {
 
   return (
     <div className="language-learning-app">
-     {/* Navbar */}
-     <nav className="navbar navbar-expand-lg navbar-dark bg-dark full-screen">
-        <div className="container">
-          <Link to="/" className="navbar-brand d-flex align-items-center">
-            <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
-            <span className="h3 mb-0 ms-2">Lang Pro</span>
-          </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav me-auto">
-              <li className="nav-item">
-                <Link to="/quizes" className="nav-link">Quizzes</Link>
+   {/* Navbar */}
+<nav className="navbar navbar-expand-lg navbar-dark bg-dark full-screen">
+  <div className="container">
+    <Link to="/" className="navbar-brand d-flex align-items-center">
+      <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
+      <span className="h3 mb-0 ms-2">Lang Pro</span>
+    </Link>
+    <button
+      className="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span className="navbar-toggler-icon"></span>
+    </button>
+    <div className="collapse navbar-collapse" id="navbarNav">
+      <ul className="navbar-nav me-auto">
+        <li className="nav-item">
+          <Link to="/quizes" className="nav-link">Quizzes</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/activities" className="nav-link">Activities</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/progress" className="nav-link">My Progress</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/subscription" className="nav-link">Subscription</Link>
+        </li>
+      </ul>
+      <div className="d-flex align-items-center">
+        {isLoggedIn ? (
+          <div className="dropdown">
+            <img
+              src={profilePicture || 'default-profile.png'} // Add a default profile picture
+              alt="Profile"
+              className="rounded-circle"
+              width="40"
+              height="40"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              style={{ 
+                cursor: 'pointer',
+                border: '2px solid #fff',
+                marginLeft: '15px'
+              }}
+            />
+            <ul 
+              className="dropdown-menu dropdown-menu-end" 
+              aria-labelledby="dropdownMenuButton"
+              style={{
+                backgroundColor: '#343a40',
+                marginTop: '10px',
+                border: '1px solid rgba(255,255,255,0.1)'
+              }}
+            >
+              <li>
+                <Link 
+                  className="dropdown-item text-light" 
+                  to="/profile"
+                  style={{ padding: '8px 20px' }}
+                >
+                  <i className="fas fa-user me-2"></i>Profile
+                </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/activities" className="nav-link">Activities</Link>
+              <li>
+                <Link 
+                  className="dropdown-item text-light" 
+                  to="/settings"
+                  style={{ padding: '8px 20px' }}
+                >
+                  <i className="fas fa-cog me-2"></i>Settings
+                </Link>
               </li>
-              <li className="nav-item">
-                <Link to="/progress" className="nav-link">My Progress</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/subscription" className="nav-link">Subscription</Link>
+              <li><hr className="dropdown-divider" style={{ borderColor: 'rgba(255,255,255,0.1)' }}/></li>
+              <li>
+                <button 
+                  className="dropdown-item text-light" 
+                  onClick={handleLogout}
+                  style={{ padding: '8px 20px' }}
+                >
+                  <i className="fas fa-sign-out-alt me-2"></i>Logout
+                </button>
               </li>
             </ul>
-            <div className="d-flex">
-              <button
-                className="btn btn-outline-primary me-2"
-                onClick={() => setShowLoginModal(true)}
-              >
-                Login
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => setShowRegisterModal(true)}
-              >
-                Register
-              </button>
-            </div>
           </div>
-        </div>
-      </nav>
-
+        ) : (
+          <>
+            <button
+              className="btn btn-outline-primary me-2"
+              onClick={() => setShowLoginModal(true)}
+            >
+              Login
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setShowRegisterModal(true)}
+            >
+              Register
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</nav>
+                              
 
           {/* Hero Section */}
           <div className="hero-section">
@@ -167,60 +237,45 @@ const Home = () => {
         </div>
       </section> */}
 
-      {/* Progress Section */}
-      <section id="progress" className="py-5">
-        <div className="container">
-          <h2 className="text-center mb-4">Track Your Progress 📈</h2>
-          <div className="row align-items-center">
-            <div className="col-md-6">
-              <img
-                src="/api/placeholder/500/300"
-                alt="Progress tracking"
-                className="img-fluid rounded shadow"
-              />
-            </div>
-            <div className="col-md-6">
-              <div className="progress-stats">
-                <h4>Your Achievements</h4>
-                <div className="progress mb-3">
-                  <div
-                    className="progress-bar bg-success"
-                    role="progressbar"
-                    style={{ width: '75%' }}
-                  >
-                    Words Learned: 75%
-                  </div>
-                </div>
-                <div className="progress mb-3">
-                  <div
-                    className="progress-bar bg-info"
-                    role="progressbar"
-                    style={{ width: '60%' }}
-                  >
-                    Quizzes Completed: 60%
-                  </div>
-                </div>
-                <div className="progress mb-3">
-                  <div
-                    className="progress-bar bg-warning"
-                    role="progressbar"
-                    style={{ width: '45%' }}
-                  >
-                    Stories Read: 45%
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-dark py-4 text-white text-center">
-        <div className="container">
-          <p className="mb-0">© 2024 Lang Pro. All rights reserved. 🌟</p>
-        </div>
-      </footer>
+      
+<footer className="footer">
+  <div className="footer-content">
+    <div className="footer-section about">
+      <h3>Lang Pro</h3>
+      <p>Empowering kids to learn languages through fun and interactive methods.</p>
+      <div className="contact">
+        <span><i className="fas fa-phone"></i> &nbsp; 123-456-789</span>
+        <span><i className="fas fa-envelope"></i> &nbsp; info@langpro.com</span>
+      </div>
+      <div className="socials">
+        <a href="#"><i className="fab fa-facebook"></i></a>
+        <a href="#"><i className="fab fa-instagram"></i></a>
+        <a href="#"><i className="fab fa-twitter"></i></a>
+        <a href="#"><i className="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div className="footer-section links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><Link to="/quizes">Quizzes</Link></li>
+        <li><Link to="/activities">Activities</Link></li>
+        <li><Link to="/progress">My Progress</Link></li>
+        <li><Link to="/subscription">Subscription</Link></li>
+      </ul>
+    </div>
+    <div className="footer-section contact-form">
+      <h3>Contact us</h3>
+      <form>
+        <input type="email" name="email" className="text-input contact-input" placeholder="Your email address..." />
+        <textarea name="message" className="text-input contact-input" placeholder="Your message..."></textarea>
+        <button type="submit" className="btn btn-primary btn-block">Send</button>
+      </form>
+    </div>
+  </div>
+  <div className="footer-bottom">
+    &copy; 2024 Lang Pro | Designed by Lang Pro | <Link to="/terms">Terms</Link> | <Link to="/privacy">Privacy</Link>
+  </div>
+</footer>
 
       {/* Login Modal */}
       {showLoginModal && (
