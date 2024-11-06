@@ -44,7 +44,7 @@ const Home = () => {
       icon: 'LK', 
       title: 'Sinhala Quiz', 
       level: 'Beginner',
-      path: '/quize'  // specific path for Sinhala quiz
+      path: '/quizes'  // specific path for Sinhala quiz
     },
     { 
       id: 2, 
