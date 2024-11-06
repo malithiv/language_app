@@ -39,8 +39,20 @@ const Home = () => {
   }, []);
 
   const quizzes = [
-    { id: 1, icon: 'LK', title: 'Sinhala Quiz', level: 'Beginner' },
-    { id: 2, icon: 'ph', title: 'Tagalog Quiz', level: 'Beginner' },
+    { 
+      id: 1, 
+      icon: 'LK', 
+      title: 'Sinhala Quiz', 
+      level: 'Beginner',
+      path: '/quize'  // specific path for Sinhala quiz
+    },
+    { 
+      id: 2, 
+      icon: 'ph', 
+      title: 'Tagalog Quiz', 
+      level: 'Beginner',
+      path: '/tagalog'  // specific path for Tagalog quiz
+    },
   ];
 
   const activities = [
@@ -212,26 +224,36 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Quiz Section */}
       <section id="quizzes" className="py-5">
-        <div className="container">
-          <h2 className="text-center mb-4">Fun Quizzes 🎮</h2>
-          <div className="row g-4">
-            {quizzes.map(quiz => (
-              <div key={quiz.id} className="col-md-4">
-                <div className="card h-100 border-0 shadow-sm hover-card">
-                  <div className="card-body text-center">
-                    <div className="display-4 mb-3">{quiz.icon}</div>
-                    <h5 className="card-title">{quiz.title}</h5>
-                    <p className="card-text text-muted">{quiz.level}</p>
-                    <Link to="/quizes"><button className="btn btn-outline-primary">Start Quiz</button></Link>
-                  </div>
-                </div>
-              </div>
-            ))}
+  <div className="container">
+    <h2 className="text-center mb-4">Fun Quizzes 🎮</h2>
+    <div className="row g-4">
+      {quizzes.map(quiz => (
+        <div key={quiz.id} className="col-md-6"> {/* Changed to col-md-6 to make cards bigger */}
+          <div className="card h-100 border-0 shadow-sm hover-card">
+            <div className="card-body text-center">
+              <div className="display-4 mb-3">{quiz.icon}</div>
+              <h5 className="card-title">{quiz.title}</h5>
+              <p className="card-text text-muted">{quiz.level}</p>
+              <Link to={quiz.path}>
+                <button 
+                  className="btn btn-outline-primary"
+                  style={{
+                    minWidth: '150px',
+                    padding: '10px 20px',
+                    fontSize: '1.1rem'
+                  }}
+                >
+                  Start Quiz
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Activities Section
       <section id="activities" className="py-5 bg-light">

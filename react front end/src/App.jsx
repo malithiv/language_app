@@ -10,6 +10,7 @@ import Home from './Components/homepage'
 import QuizComponent from './Components/quize';
 import SubscriptionPage from './Components/Subscription';
 import PaymentForm from './Components/PaymentGateway';
+import TG from './Components/tagalog';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     <Route path="/quizes" element={<QuizComponent/>}> </Route>
     <Route path="/subscription" element={<SubscriptionPage/>}> </Route>
     <Route path="/payment" element={<PaymentForm/>}> </Route>
+    <Route path="/tagalog" element={<TG/>}> </Route>
    
     </Routes>
     </BrowserRouter>
