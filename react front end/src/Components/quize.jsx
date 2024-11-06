@@ -179,9 +179,9 @@ const QuizComponent = () => {
               </p>
             </div>
           ))}
-          <button onClick={() => setCurrentQuiz(null)} className="back-button">
+          <Link to="/quiz"><button  className="back-button">
             Back to Quizzes
-          </button>
+          </button></Link>
         </div>
       )}
     </div>

@@ -1,10 +1,10 @@
-/* Home.css */
+/* Home.css - Dark Mode */
 .hero-section {
-    background: linear-gradient(135deg, #6610f2 0%, #6f42c1 100%);
-    padding: 100px 0;
-  }
+  background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+  padding: 100px 0;
+}
 
-  /* Navbar Styles */
+/* Navbar Styles */
 .navbar {
   width: 100vw;
   padding: 1rem 0;
@@ -13,9 +13,9 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: linear-gradient(135deg, #6610f2, #6f42c1);
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
   margin: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .navbar .container {
@@ -81,57 +81,58 @@
   font-weight: bold;
   color: #ffffff; /* Adjust the color as needed */
 }
+
 /* Responsive Navbar */
 @media (max-width: 991px) {
   .navbar {
-    padding: 0.5rem 0;
+      padding: 0.5rem 0;
   }
 
   .navbar .container {
-    padding: 0 1rem;
+      padding: 0 1rem;
   }
 
   .navbar-collapse {
-    background: linear-gradient(135deg, #6610f2, #6f42c1);
-    padding: 1rem;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+      padding: 1rem;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 1000;
   }
 
   .navbar-nav {
-    padding: 1rem 0;
+      padding: 1rem 0;
   }
 
   .nav-link {
-    padding: 0.75rem 1rem !important;
+      padding: 0.75rem 1rem !important;
   }
 
   .navbar-nav .btn {
-    margin: 0.5rem 0;
-    width: 100%;
+      margin: 0.5rem 0;
+      width: 100%;
   }
 
   .d-flex {
-    flex-direction: column;
-    width: 100%;
+      flex-direction: column;
+      width: 100%;
   }
 
   .d-flex .btn {
-    margin: 0.25rem 0;
-    width: 100%;
+      margin: 0.25rem 0;
+      width: 100%;
   }
 }
 
 @media (max-width: 576px) {
   .navbar .container {
-    padding: 0 0.5rem;
+      padding: 0 0.5rem;
   }
 
   .navbar-brand {
-    font-size: 1.4rem;
+      font-size: 1.4rem;
   }
 }
 
@@ -163,24 +164,11 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Beautiful gradient options - uncomment the one you prefer */
-
-  /* Option 1: Vibrant Purple to Blue */
-  background: linear-gradient(120deg, #6a11cb 0%, #2575fc 100%);
-
-  /* Option 2: Soft Purple to Pink */
-  /* background: linear-gradient(120deg, #8e2de2 0%, #4a00e0 100%); */
-
-  /* Option 3: Modern Blue to Purple */
-  /* background: linear-gradient(120deg, #4e54c8 0%, #8f94fb 100%); */
-
-  /* Option 4: Colorful Gradient */
-  /* background: linear-gradient(120deg, #FF416C 0%, #FF4B2B 100%); */
-
+  background: linear-gradient(120deg, #1e1e1e 0%, #2a2a2a 100%);
   color: white;
   text-align: center;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .hero-content {
@@ -191,6 +179,7 @@ html, body {
   position: relative;
 }
 
+/* Optional: Add subtle gradient overlay
 /* Optional: Add subtle gradient overlay */
 .hero-content::before {
   content: '';
@@ -199,7 +188,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 60%);
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.05) 0%, transparent 60%);
 }
 
 .hero-section h1 {
@@ -207,7 +196,7 @@ html, body {
   font-weight: 700;
   margin-bottom: 1rem;
   line-height: 1.2;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .hero-section p {
@@ -220,65 +209,65 @@ html, body {
 }
 
 .hero-section .btn {
-  background: rgba(255, 255, 255, 0.9);
-  color: #6a11cb;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   font-weight: bold;
   border: none;
   transition: all 0.3s ease;
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .hero-section .btn:hover {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
   .hero-section h1 {
-    font-size: 2.8rem;
+      font-size: 2.8rem;
   }
 }
 
 @media (max-width: 768px) {
   .hero-section {
-    padding: 60px 0;
+      padding: 60px 0;
   }
 
   .hero-section h1 {
-    font-size: 2.3rem;
+      font-size: 2.3rem;
   }
 
   .hero-section p {
-    font-size: 1.1rem;
+      font-size: 1.1rem;
   }
 }
 
 @media (max-width: 576px) {
   .hero-section {
-    padding: 50px 0;
+      padding: 50px 0;
   }
 
   .hero-section h1 {
-    font-size: 2rem;
+      font-size: 2rem;
   }
 
   .hero-section p {
-    font-size: 1rem;
+      font-size: 1rem;
   }
 
   .hero-content {
-    padding: 0 1rem;
+      padding: 0 1rem;
   }
 }
 
 /* Footer Styles */
 .footer {
-  background-color: #333;
-  color: #fff;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
   padding: 40px 0 20px;
   font-size: 16px;
 }
@@ -300,7 +289,7 @@ html, body {
 }
 
 .footer-section h3 {
-  color: #fff;
+  color: #ffffff;
   margin-bottom: 15px;
   font-size: 18px;
   font-weight: bold;
@@ -319,7 +308,7 @@ html, body {
   display: inline-block;
   width: 35px;
   height: 35px;
-  background: #555;
+  background: #333;
   color: #fff;
   border-radius: 50%;
   text-align: center;
@@ -342,7 +331,7 @@ html, body {
 }
 
 .links ul li a {
-  color: #fff;
+  color: #e0e0e0;
   text-decoration: none;
   transition: all 0.3s;
 }
@@ -353,8 +342,8 @@ html, body {
 }
 
 .contact-form .contact-input {
-  background: #555;
-  color: #fff;
+  background: #333;
+  color: #e0e0e0;
   border: none;
   margin-bottom: 10px;
   line-height: 1.5em;
@@ -377,7 +366,7 @@ html, body {
   border: none;
   padding: 12px;
   background: #00c3ff;
-  color: #fff;
+  color: #1a1a1a;
   font-size: 16px;
   transition: all 0.3s;
 }
@@ -387,8 +376,8 @@ html, body {
 }
 
 .footer-bottom {
-  background: #222;
-  color: #fff;
+  background: #121212;
+  color: #e0e0e0;
   text-align: center;
   padding: 10px 0;
   margin-top: 20px;
@@ -401,6 +390,6 @@ html, body {
 
 @media screen and (max-width: 768px) {
   .footer-section {
-    flex: 100%;
+      flex: 100%;
   }
 }

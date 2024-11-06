@@ -37,7 +37,7 @@ const Home = () => {
   ];
 <Link to="/terms" className="text-primary">Terms of Service</Link>
   const handleLogin = async () => {
-    const response = await fetch('http://127.0.0.1:5000/login', {
+    const response = await fetch('http://127.0.0.1:3000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const Home = () => {
   };
 
   const handleRegister = async () => {
-    const response = await fetch('http://127.0.0.1:5000/register', {
+    const response = await fetch('http://127.0.0.1:3000/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
