@@ -94,16 +94,52 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/api/process-payment', (req, res) => {
-  const { cardNumber, expiryDate, cvv, amount } = req.body;
+app.post('/api/process-payment', async (req, res) => {
+  const { userId } = req.body;
 
   // Simulate payment processing
   const isSuccessful = true;
   
   if (isSuccessful) {
-    res.json({ status: 'success', message: 'Payment processed successfully' });
+    try {
+      // Update the user's payment_done status in the database
+      const [result] = await db.query(
+        'UPDATE users SET payment_done = TRUE WHERE id = ?',
+        [userId]
+      );
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ status: 'error', message: 'User not found' });
+      }
+
+      res.json({ status: 'success', message: 'Payment processed successfully' });
+    } catch (error) {
+      console.error('Error updating payment status:', error);
+      res.status(500).json({ status: 'error', message: 'Internal server error' });
+    }
   } else {
     res.status(400).json({ status: 'error', message: 'Payment failed' });
+  }
+});
+
+app.get('/api/check-payment-status/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const [rows] = await db.query(
+      'SELECT payment_done FROM users WHERE id = ?',
+      [userId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ status: 'error', message: 'User not found' });
+    }
+
+    const paymentDone = rows[0].payment_done;
+    res.json({ status: 'success', paymentDone });
+  } catch (error) {
+    console.error('Error checking payment status:', error);
+    res.status(500).json({ status: 'error', message: 'Internal server error' });
   }
 });
 

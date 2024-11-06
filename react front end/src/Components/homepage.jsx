@@ -50,8 +50,8 @@ const Home = () => {
       
     if (response.ok) {
       localStorage.setItem('userId', data.userId);
-      localStorage.setItem('username', data.username); // Store username in localStorage
-      setUsername(data.username); // Set username in state
+      localStorage.setItem('username', data.username); 
+      setUsername(data.username); 
       setIsLoggedIn(true);
       Swal.fire('Success', 'Login successful!', 'success');
       setShowLoginModal(false);

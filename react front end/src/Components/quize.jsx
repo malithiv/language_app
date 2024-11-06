@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import './QuizComponent.css';
 import logo from './langpro.png';
 
@@ -12,23 +12,53 @@ const QuizComponent = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [quizResults, setQuizResults] = useState(null);
   const [currentAnswer, setCurrentAnswer] = useState('');
-  const userId = localStorage.getItem('user_id');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profilePicture, setProfilePicture] = useState('');
+
+  const [isPaid, setIsPaid] = useState(true); // Start with true to show quiz initially
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  
+  const userId = localStorage.getItem('userId');
+
+  useEffect(() => {
+    const checkPaymentStatus = async () => {
+      if (!userId) {
+        navigate('/');
+        return;
+      }
+
+      try {
+        const response = await axios.get(`http://localhost:3000/api/check-payment-status/${userId}`);
+        setIsPaid(response.data.paymentDone);
+        
+        if (!response.data.paymentDone) {
+          // Set a timeout to navigate after a short delay
+          setTimeout(() => {
+            navigate('/subscription');
+          }, 3000); // 3 seconds delay, adjust as needed
+        }
+      } catch (error) {
+        console.error('Error checking payment status:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkPaymentStatus();
+  }, [userId, navigate]);
+
+
 
   useEffect(() => {
     fetchQuizzes();
   }, []);
 
-  const fetchQuizzes = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/api/quizzes');
-      setQuizzes(response.data);
-    } catch (error) {
-      console.error('Error fetching quizzes:', error);
-    }
 
-    try {
+
+
+  const fetchQuizzes = async () => {
+   try {
       const response = await axios.get('http://localhost:5000/api/quizzes');
       setQuizzes(response.data);
     } catch (error) {

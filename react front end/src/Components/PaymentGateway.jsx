@@ -6,6 +6,7 @@ const PaymentForm = () => {
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
   const [amount, setAmount] = useState('');
+  const userId = localStorage.getItem('userId');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -13,7 +14,7 @@ const PaymentForm = () => {
       const response = await fetch('http://localhost:3000/api/process-payment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cardNumber, expiryDate, cvv, amount }),
+        body: JSON.stringify({ userId }),
       });
       const data = await response.json();
       alert(data.message);
