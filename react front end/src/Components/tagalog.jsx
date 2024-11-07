@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './QuizComponent1.css';
+import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import logo from './langpro.png';
 
 function TG() {
   const [topic, setTopic] = useState('');
@@ -12,7 +14,24 @@ function TG() {
   const [quizFinished, setQuizFinished] = useState(false);
   const [quizDetails, setQuizDetails] = useState([]);
   const [isQuizMode, setIsQuizMode] = useState(false);
-  const [answerFeedback, setAnswerFeedback] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('username');
+    setIsLoggedIn(false);
+    setUsername('');
+    window.location.href = '/';
+  };
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setIsLoggedIn(true);
+      setUsername(storedUsername);
+    }
+  }, []);
 
   const handleTopicChange = (e) => {
     setTopic(e.target.value);
@@ -27,7 +46,6 @@ function TG() {
     setUserAnswers([]);
     setQuizFinished(false);
     setQuizDetails([]);
-    setAnswerFeedback([]);
     setIsQuizMode(false);
   };
 
@@ -53,7 +71,6 @@ function TG() {
     try {
       const response = await axios.post('http://localhost:5001/create_quiz', { topic });
       const quizData = response.data;
-
       setQuiz(quizData);
       setIsQuizMode(true);
     } catch (error) {
@@ -87,14 +104,171 @@ function TG() {
     setUserAnswers(updatedAnswers);
   };
 
-  return (
-    <div className="App">
-      <div className="container">
-        <h1 className="header">Tagalog Quiz</h1>
+  const styles = {
+    app: {
+      fontFamily: 'Arial, sans-serif',
+      backgroundColor: '#121212',
+      color: '#EAEAEA',
+      padding: '20px',
+      height: '100vh',
+    },
+    container: {
+      maxWidth: '900px',
+      margin: '0 auto',
+      padding: '20px',
+      borderRadius: '10px',
+      backgroundColor: '#1E1E1E',
+    },
+    header: {
+      textAlign: 'center',
+      fontSize: '3em',
+      color: '#00C2FF',
+      marginBottom: '20px',
+    },
+    topicSelector: {
+      marginBottom: '40px',
+    },
+    topicOptions: {
+      display: 'flex',
+      gap: '20px',
+      justifyContent: 'center',
+      marginBottom: '20px',
+    },
+    buttonContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '30px',
+    },
+    btn: {
+      backgroundColor: '#00C2FF',
+      color: '#121212',
+      fontSize: '1.2em',
+      padding: '10px 30px',
+      border: 'none',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      transition: 'background-color 0.3s ease',
+    },
+    btnHover: {
+      backgroundColor: '#0096b0',
+    },
+    lessonCard: {
+      backgroundColor: '#2F2F2F',
+      borderRadius: '10px',
+      padding: '20px',
+      marginTop: '20px',
+    },
+    quizCard: {
+      backgroundColor: '#2F2F2F',
+      borderRadius: '10px',
+      padding: '20px',
+      marginTop: '20px',
+    },
+    quizQuestion: {
+      marginBottom: '15px',
+    },
+    answerOption: {
+      marginLeft: '20px',
+    },
+    quizSummary: {
+      backgroundColor: '#333',
+      padding: '20px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+      marginTop: '20px',
+    },
+    scoreSummary: {
+      fontSize: '24px',
+      fontWeight: 'bold',
+    },
+    score: {
+      color: '#007BFF',
+    },
+    correct: {
+      color: 'green',
+    },
+    wrong: {
+      color: 'red',
+    },
+  };
 
-        <div className="topic-selector">
+  return (
+    <div style={styles.app}>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <Link to="/" className="navbar-brand d-flex align-items-center">
+            <img src={logo} alt="KidsLingo Logo" className="navbar-logo" />
+            <span className="h3 mb-0 ms-2">Lang Pro</span>
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item">
+                <Link to="/quizes" className="nav-link">Quizzes</Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/subscription" className="nav-link">Subscription</Link>
+              </li>
+            </ul>
+            <div className="d-flex align-items-center">
+              {isLoggedIn ? (
+                <div className="dropdown">
+                  <button
+                    className="btn btn-dark dropdown-toggle d-flex align-items-center"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span className="me-2">{username}</span>
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      <Link className="dropdown-item text-light" to="/profile">
+                        <i className="fas fa-user me-2"></i>Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item text-light" to="/settings">
+                        <i className="fas fa-cog me-2"></i>Settings
+                      </Link>
+                    </li>
+                    <li><hr className="dropdown-divider" /></li>
+                    <li>
+                      <button className="dropdown-item text-light" onClick={handleLogout}>
+                        <i className="fas fa-sign-out-alt me-2"></i>Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              ) : (
+                <>
+                  <button className="btn btn-outline-primary me-2" onClick={() => setShowLoginModal(true)}>
+                    Login
+                  </button>
+                  <button className="btn btn-primary" onClick={() => setShowRegisterModal(true)}>
+                    Register
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div style={styles.container}>
+        <h1 style={styles.header}>Tagalog Quiz</h1>
+
+        <div style={styles.topicSelector}>
           <h3>Select a Topic:</h3>
-          <div className="topic-options">
+          <div style={styles.topicOptions}>
             <div>
               <input
                 type="radio"
@@ -104,7 +278,7 @@ function TG() {
                 onChange={handleTopicChange}
                 checked={topic === 'animals'}
               />
-              <label htmlFor="animals">Animals</label>
+            <label htmlFor="animals">Animals</label>
             </div>
             <div>
               <input
@@ -130,29 +304,29 @@ function TG() {
             </div>
           </div>
 
-          <div className="button-container">
-            <button onClick={generateLesson} className="btn">Generate Lesson</button>
-            <button onClick={generateQuiz} className="btn">Generate Quiz</button>
+          <div style={styles.buttonContainer}>
+            <button onClick={generateLesson} style={styles.btn}>Generate Lesson</button>
+            <button onClick={generateQuiz} style={styles.btn}>Generate Quiz</button>
           </div>
         </div>
 
         {!isQuizMode && lesson && (
-          <div className="lesson-card">
+          <div style={styles.lessonCard}>
             <h3>Lesson on {topic}</h3>
             <p>{lesson}</p>
           </div>
         )}
 
         {isQuizMode && quiz.questions && !quizFinished && (
-          <div className="quiz-card">
+          <div style={styles.quizCard}>
             <h3>Quiz on {topic}</h3>
             <p>Score: {score}</p>
 
-            <div className="quiz-question">
+            <div style={styles.quizQuestion}>
               <p>{quiz.questions[currentQuestionIndex]}</p>
 
               {quiz.answers[currentQuestionIndex].map((answer, ansIndex) => (
-                <div key={ansIndex} className="answer-option">
+                <div key={ansIndex} style={styles.answerOption}>
                   <input
                     type="radio"
                     id={`answer-${ansIndex}`}
@@ -171,6 +345,7 @@ function TG() {
                 <button
                   onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
                   className="btn-nav"
+                  style={styles.btn}
                 >
                   Previous
                 </button>
@@ -179,11 +354,12 @@ function TG() {
                 <button
                   onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
                   className="btn-nav"
+                  style={styles.btn}
                 >
                   Next
                 </button>
               ) : (
-                <button onClick={handleAnswerSubmit} className="btn-submit">
+                <button onClick={handleAnswerSubmit} style={styles.btn}>
                   Submit Answers
                 </button>
               )}
@@ -192,19 +368,19 @@ function TG() {
         )}
 
         {quizFinished && (
-          <div className="quiz-summary">
+          <div style={styles.quizSummary}>
             <h3>Quiz Summary</h3>
-            <div className="score-summary">
-              <p>Your Score: <span className="score">{score}</span> out of {quiz.questions.length * 10}</p>
+            <div style={styles.scoreSummary}>
+              <p>Your Score: <span style={styles.score}>{score}</span> out of {quiz.questions.length * 10}</p>
             </div>
 
             <div className="quiz-detail-list">
               {quizDetails.map((detail, index) => (
-                <div key={index} className="quiz-detail">
+                <div key={index} style={styles.quizDetail}>
                   <p><strong>Question:</strong> {detail.question}</p>
                   <p><strong>Your Answer:</strong> {detail.user_answer}</p>
                   <p><strong>Correct Answer:</strong> {detail.correct_answer}</p>
-                  <p className={detail.is_correct ? 'correct' : 'wrong'}>
+                  <p style={detail.is_correct ? styles.correct : styles.wrong}>
                     <strong>Result:</strong> {detail.is_correct ? 'Correct' : 'Wrong'}
                   </p>
                 </div>
